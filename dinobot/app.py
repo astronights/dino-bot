@@ -1,6 +1,7 @@
-from game.loader import GameLoader
+from game.control import GameControl
 
 def run():
-    gameloader = GameLoader()
-    gameloader.load_game()
+    game = GameControl()
+    game.load_game()
+    # game.start_game()
     print("Hello World")
