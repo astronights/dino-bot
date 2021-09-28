@@ -8,9 +8,9 @@ class GameControl():
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         options.add_experimental_option("detach", True)
-        self.DINO_URL="chrome://dino"
+        self.DINO_URL="http://127.0.0.1:5000"
         self.driver = webdriver.Chrome(options=options)
-        self.driver.set_network_conditions(offline=True, latency=5, throughput=500 * 1024)
+        # self.driver.set_network_conditions(offline=True, latency=5, throughput=500 * 1024)
         self.actionChains = ActionChains(self.driver)
 
     def load_game(self):
@@ -21,4 +21,4 @@ class GameControl():
 
     def start_game(self):
         print("Starting game...")
-        self.actionChains.send_keys(Keys.SPACE).perform()
+        self.actionChains.click(self.driver.find_element_by_id("dino-frame")).send_keys(Keys.SPACE).perform()
