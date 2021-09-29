@@ -8,6 +8,8 @@ requests = "*"
 selenium = "*"
 flask = "*"
 python-dotenv = "*"
+pyautogui = "*"
+pillow = "*"
 
 [dev-packages]
 
