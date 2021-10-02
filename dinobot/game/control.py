@@ -12,8 +12,6 @@ class GameControl():
         self.DINO_URL="http://127.0.0.1:5000"
         self.driver = webdriver.Chrome(options=options)
         self.driver.maximize_window()
-        print(self.driver.window_handles)
-        # self.driver.set_network_conditions(offline=True, latency=5, throughput=500 * 1024)
         self.actionChains = ActionChains(self.driver)
 
     def load_game(self):
@@ -25,4 +23,5 @@ class GameControl():
 
     def start_game(self):
         print("Starting game...")
+        print(self.driver.window_handles)
         self.actionChains.click(self.driver.find_element_by_id("dino-frame")).send_keys(Keys.SPACE).perform()
