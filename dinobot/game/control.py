@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from PIL import Image, ImageGrab
 import pyautogui
 
 class GameControl():
@@ -16,7 +17,6 @@ class GameControl():
         self.DINO_URL="http://127.0.0.1:5000"
         self.driver = webdriver.Chrome(options=options)
         self.actionChains = ActionChains(self.driver)
-        self.screen = pyautogui.size()
 
     def load_game(self):
         self.driver.get(self.DINO_URL)
@@ -38,3 +38,8 @@ class GameControl():
         self.actionChains.click()
         self.actionChains.send_keys(Keys.SPACE)
         self.actionChains.perform()
+
+    def map_items(self):
+        print("Mapping score...")
+        image = pyautogui.screenshot(region=(self.canvasPos['x'], self.canvasPos['y'], self.canvasPos['x'] + self.canvasSize['height'], self.canvasPos['y'] + self.canvasSize['width']))
+        image.show()
