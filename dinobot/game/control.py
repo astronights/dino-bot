@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
+import pyautogui
 
 class GameControl():
     def __init__(self):
@@ -12,14 +13,14 @@ class GameControl():
         self.DINO_URL="http://127.0.0.1:5000"
         self.driver = webdriver.Chrome(options=options)
         self.actionChains = ActionChains(self.driver)
+        self.screen = pyautogui.size()
+        self.pos = None
 
     def load_game(self):
         self.driver.get(self.DINO_URL)
-        print(self.driver.get_window_position())
-        print(self.driver.get_window_rect())
-        print(self.driver.get_window_size())
-        # self.driver.set_window_size()
-        # self.driver.switch_to.window(self.driver.window_handles[-1])
+        self.pos = self.driver.get_window_rect()
+        self.driver.minimize_window()
+        self.driver.maximize_window()
 
     def close_game(self):
         print("Closing game...")
@@ -27,4 +28,8 @@ class GameControl():
 
     def start_game(self):
         print("Starting game...")
-        self.actionChains.click(self.driver.find_element_by_id("dino-frame")).send_keys(Keys.SPACE).perform()
+        frameElem = self.driver.find_element_by_id("dino-frame")
+        self.actionChains.move_to_element_with_offset(frameElem, 10, 10)
+        self.actionChains.click()
+        self.actionChains.send_keys(Keys.SPACE)
+        self.actionChains.perform()
