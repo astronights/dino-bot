@@ -9,8 +9,9 @@ selenium = "*"
 flask = "*"
 python-dotenv = "*"
 pyautogui = "*"
-pillow = "*"
 pywinauto = "*"
+numpy = "*"
+pillow = "*"
 
 [dev-packages]
 

@@ -7,7 +7,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from PIL import Image, ImageGrab
-import pyautogui
+from io import BytesIO
+
+import numpy as np
 
 class GameControl():
     def __init__(self):
@@ -27,6 +29,8 @@ class GameControl():
         self.dinoCanvas = self.driver.find_elements_by_class_name("runner-canvas")[0]
         self.canvasPos = self.dinoCanvas.location
         self.canvasSize = self.dinoCanvas.size
+        self.relativeCanvasPos = (self.canvasPos['x']*1.55, self.canvasPos['y']*3.3, (self.canvasPos['x']*1.55)+(self.canvasSize['width']*1.5), (3.3*self.canvasPos['y'])+self.canvasSize['height']*1.75)
+    
 
     def close_game(self):
         print("Closing game...")
@@ -41,5 +45,7 @@ class GameControl():
 
     def map_items(self):
         print("Mapping score...")
-        image = pyautogui.screenshot(region=(self.canvasPos['x'], self.canvasPos['y'], self.canvasPos['x'] + self.canvasSize['height'], self.canvasPos['y'] + self.canvasSize['width']))
-        image.show()
+        canvasImg = ImageGrab.grab(self.relativeCanvasPos)
+        canvasImg.show()
+        # canvasImg = Image.open(BytesIO(self.dinoCanvas.screenshot_as_png)).convert('L')
+        canvasImg.crop((self.canvasSize['width']*0.87, 0, self.canvasSize['width'], self.canvasSize['height']*0.2)).show()
