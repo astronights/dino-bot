@@ -6,9 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from PIL import Image, ImageGrab
-from io import BytesIO
-import time
+from PIL import ImageGrab
 
 import numpy as np
 
