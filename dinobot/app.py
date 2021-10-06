@@ -5,7 +5,6 @@ def run():
     game = GameControl()
     game.load_game()
     game.start_game()
-    time.sleep(2)
-    game.map_items()
-    # time.sleep(2)
-    # game.close_game()
+    while not game.act_obstacle():
+        continue
+    game.close_game()

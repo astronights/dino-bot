@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from PIL import Image, ImageGrab
 from io import BytesIO
+import time
 
 import numpy as np
 
@@ -43,9 +44,20 @@ class GameControl():
         self.actionChains.send_keys(Keys.SPACE)
         self.actionChains.perform()
 
-    def map_items(self):
-        print("Mapping score...")
-        canvasImg = ImageGrab.grab(self.relativeCanvasPos)
-        canvasImg.show()
-        # canvasImg = Image.open(BytesIO(self.dinoCanvas.screenshot_as_png)).convert('L')
-        canvasImg.crop((self.canvasSize['width']*0.87, 0, self.canvasSize['width'], self.canvasSize['height']*0.2)).show()
+    def act_obstacle(self):
+        canvasImg = ImageGrab.grab(self.relativeCanvasPos).convert('L')
+        obstacle = canvasImg.crop((canvasImg.size[0]*0.2, canvasImg.size[1]*0.5, canvasImg.size[0]*0.3, canvasImg.size[1]*0.7))
+        if(np.sum(np.array(obstacle)) < self.all_white()):
+            print("Jump") 
+            self.actionChains.send_keys(Keys.SPACE)
+            self.actionChains.perform()
+        return(self.game_over(canvasImg))
+
+    def game_over(self, canvas):
+        im = canvas.crop((canvas.size[0]*0.7, 0, canvas.size[0]*0.77, canvas.size[1]*0.11))
+        pixels = np.array(im)
+        return(np.sum(pixels) < 450000)
+
+
+    def all_white(self):
+        return(52*90*247)
