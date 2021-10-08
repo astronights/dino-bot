@@ -1,7 +1,9 @@
 ## Basic Python program to automate chrome Dinobot using AI
 
-#Run Flask Server
+### Run Flask Server
+
 `flask run`
 
-#Start App
+### Start App
+
 `python dinobot`
