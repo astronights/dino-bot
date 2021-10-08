@@ -8,6 +8,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from PIL import ImageGrab
 
+import pyautogui
+import time
 import numpy as np
 
 class GameControl():
@@ -44,11 +46,9 @@ class GameControl():
 
     def act_obstacle(self):
         canvasImg = ImageGrab.grab(self.relativeCanvasPos).convert('L')
-        obstacle = canvasImg.crop((canvasImg.size[0]*0.2, canvasImg.size[1]*0.5, canvasImg.size[0]*0.3, canvasImg.size[1]*0.7))
-        if(np.sum(np.array(obstacle)) < self.all_white()):
-            print("Jump") 
-            self.actionChains.send_keys(Keys.SPACE)
-            self.actionChains.perform()
+        obstacle = canvasImg.crop((canvasImg.size[0]*0.35, canvasImg.size[1]*0.5, canvasImg.size[0]*0.45, canvasImg.size[1]*0.7))
+        if(np.sum(np.array(obstacle)) < self.all_white(obstacle)):
+            self.actionChains.key_down(Keys.SPACE).key_up(Keys.SPACE).perform()
         return(self.game_over(canvasImg))
 
     def game_over(self, canvas):
@@ -57,5 +57,5 @@ class GameControl():
         return(np.sum(pixels) < 450000)
 
 
-    def all_white(self):
-        return(52*90*247)
+    def all_white(self, obstacleFrame):
+        return(obstacleFrame.size[0]*obstacleFrame.size[1]*247)
