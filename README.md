@@ -1,4 +1,6 @@
-## Basic Python program to automate chrome Dinobot using AI
+## DinoBot
+
+Basic Python application to automate the Chrome dino game using Selenium for automation
 
 ### Run Flask Server
 
